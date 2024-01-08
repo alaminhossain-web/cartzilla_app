@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Checkout\CheckoutController;
+use App\Http\Controllers\Customer\CustomerAuthController;
+use App\Http\Controllers\Wishlist\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +39,16 @@ Route::get('/checkout-detail', [CheckoutController::class, 'detail'])->name('che
 Route::get('/checkout-shipping', [CheckoutController::class, 'shipping'])->name('checkout-shipping');
 Route::get('/checkout-payment', [CheckoutController::class, 'payment'])->name('checkout-payment');
 Route::get('/checkout-review', [CheckoutController::class, 'review'])->name('checkout-review');
+Route::post('/new-order', [CheckoutController::class, 'newOrder'])->name('new-order');
 Route::get('/checkout-complete', [CheckoutController::class, 'complete'])->name('checkout-complete');
+
+Route::get('/login-register', [CustomerAuthController::class, 'login'])->name('login-register');
+Route::post('/login-check', [CustomerAuthController::class, 'loginCheck'])->name('login-check');
+Route::post('/new-customer', [CustomerAuthController::class, 'newCustomer'])->name('new-customer');
+Route::get('/customer-logout', [CustomerAuthController::class, 'logout'])->name('customer-logout');
+Route::get('/my-dashboard', [CustomerAuthController::class, 'dashboard'])->name('customer.dashboard');
+Route::resource('wishlist',WishlistController::class);
+Route::get('/add-wishlist/{id}',[WishlistController::class,'add'])->name('add.wishlist');
 
 
 

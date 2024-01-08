@@ -6,11 +6,25 @@
         </div>
         <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button><a class="navbar-tool navbar-stuck-toggler" href="#"><span class="navbar-tool-tooltip">Expand menu</span>
-            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-menu"></i></div></a><a class="navbar-tool d-none d-lg-flex" href="account-wishlist.html"><span class="navbar-tool-tooltip">Wishlist</span>
-            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div></a><a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
-            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-menu"></i></div></a><a class="navbar-tool d-none d-lg-flex me-2" href="account-wishlist.html"><span class="navbar-tool-label">{{count($wishlist)}}</span><span class="navbar-tool-tooltip">Wishlist</span>
+
+            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div></a>
+
+
+            @if(Session::get('customer_id'))
+
+            <div class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside"><i class="navbar-tool-icon ci-user"></i> {{Session::get('customer_name')}}</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ route('customer.dashboard')}}"><i class="navbar-tool-icon ci-home"></i>  Dashboard</a></li>
+                <li><a class="dropdown-item" href="{{ route('customer-logout')}}"><i class="navbar-tool-icon ci-turn-off"></i>  Logout</a></li>
+              </ul>
+            </div> 
+             @else
+             <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="{{route('login-register')}}">
+              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
             <div class="navbar-tool-text ms-n3"><small>Hello, Sign in</small>My Account</div></a>
-          <div class="navbar-tool dropdown ms-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html"><span class="navbar-tool-label">{{ count(Cart::content()) }}</span><i class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text" href="shop-cart.html"><small>My Cart</small>$265.00</a>
+              @endif
+          <div class="navbar-tool dropdown ms-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{ route('cart.index')}}"><span class="navbar-tool-label">{{ count(Cart::content()) }}</span><i class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text" href="shop-cart.html">My Cart</a>
             <!-- Cart dropdown-->
             <div class="dropdown-menu dropdown-menu-end">
               <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">

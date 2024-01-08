@@ -47,31 +47,49 @@
             </div>
           </div><a class="btn btn-light btn-sm btn-shadow mt-3 mt-sm-0" href="account-profile.html"><i class="ci-edit me-2"></i>Edit profile</a>
         </div>
+
         <!-- Shipping address-->
         <h2 class="h6 pt-1 pb-3 mb-3 border-bottom">Shipping address</h2>
+        <form method="post" action="{{ route('new-order')}}">
+          @csrf
+          
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <div class="mb-3">
               <label class="form-label" for="checkout-fn">Full Name</label>
-              <input class="form-control" type="text" name="name" id="checkout-fn">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="mb-3">
-              <label class="form-label" for="checkout-email">E-mail Address</label>
-              <input class="form-control" type="email" name="email" id="checkout-email">
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="mb-3">
-              <label class="form-label" for="checkout-phone">Phone Number</label>
-              <input class="form-control" type="number" name="mobile" id="checkout-phone">
+              @if(isset($customer->name))
+                  <input type="text" class="form-control" required="" readonly value="{{ $customer->name}}" name="name">
+                  @else
+                  <input class="form-control" type="text" name="name" id="checkout-fn">
+                  @endif
             </div>
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label" for="checkout-email">E-mail Address</label>
+              @if(isset($customer->email))
+              <input type="email" class="form-control" name="email" readonly value="{{ $customer->email}}" required="">
+              @else
+              <input class="form-control" type="email" name="email" id="checkout-email">
+              @endif
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label" for="checkout-phone">Phone Number</label>
+              @if(isset($customer->mobile))
+                        <input type="number" class="form-control" name="mobile" readonly value="{{ $customer->mobile}}" required="">
+                        @else
+                        <input class="form-control" type="number" name="mobile" id="checkout-phone">
+                        @endif
+            </div>
+          </div>
+        </div>
+        
         {{-- <div class="row">
           <div class="col-sm-6">
             <div class="mb-3">
@@ -118,10 +136,20 @@
         </div> --}}
 
         <div class="row">
+          <div class="col-sm-12">
+            <div class="mb-3">
+              <label class="form-label" for="checkout-address-1">Delivery Address</label>
+              <textarea class="form-control" type="text" name="delivery_address" rows="5"></textarea>
+            </div>
+          </div>
           <div class="col-sm-6">
             <div class="mb-3">
-              <label class="form-label" for="checkout-address-1">Address</label>
-              <input class="form-control" type="text" id="checkout-address-1">
+              <label class="form-label" for="checkout-country">Payment Method</label>
+              <select class="form-select" name="payment_method">
+                <option>Choose Payment Method</option>
+                <option value="online">Online Payment</option>
+                <option value="cash">Cash on Delivery</option>
+              </select>
             </div>
           </div>
           {{-- <div class="col-sm-6">
@@ -131,15 +159,16 @@
             </div>
           </div> --}}
         </div>
-        <h6 class="mb-3 py-3 border-bottom">Billing address</h6>
+        {{-- <h6 class="mb-3 py-3 border-bottom">Billing address</h6>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" checked id="same-address">
           <label class="form-check-label" for="same-address">Same as shipping address</label>
-        </div>
+        </div> --}}
         <!-- Navigation (desktop)-->
         <div class="d-none d-lg-flex pt-4 mt-3">
           <div class="w-50 pe-3"><a class="btn btn-secondary d-block w-100" href="shop-cart.html"><i class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Back to Cart</span><span class="d-inline d-sm-none">Back</span></a></div>
-          <div class="w-50 ps-2"><a class="btn btn-primary d-block w-100" href="{{ route('checkout-shipping')}}"><span class="d-none d-sm-inline">Proceed to Shipping</span><span class="d-inline d-sm-none">Next</span><i class="ci-arrow-right mt-sm-0 ms-1"></i></a></div>
+          <div class="w-50 ps-2">
+            <button class="btn btn-primary d-block w-100" type="submit"><span class="d-none d-sm-inline">Proceed to Shipping</span><span class="d-inline d-sm-none">Next</span><i class="ci-arrow-right mt-sm-0 ms-1"></i></button></div>
         </div>
       </section>
       <!-- Sidebar-->
@@ -152,7 +181,7 @@
               @foreach (Cart::content() as $item)
               <div class="d-flex align-items-center pb-2 border-bottom"><a class="d-block flex-shrink-0" href="shop-single-v1.html"><img src="{{asset($item->options->image)}}" width="64" style="height: 64px" alt="Product"></a>
                 <div class="ps-2">
-                  <h6 class="widget-product-title"><a href="shop-single-v1.html">{{$item->name}}</a></h6>
+                  <h6 class="widget-product-title"><a href="{{route('product-detail',$item->id)}}">{{$item->name}}</a></h6>
                   <div class="widget-product-meta"><span class="text-accent me-2">${{$item->price}}.<small>00</small></span><span class="text-muted">x {{ $item->qty }}</span><span> = ${{ $item->subtotal}}</span></div>
                 </div>
               </div>
@@ -166,9 +195,12 @@
               <li class="d-flex justify-content-between align-items-center"><span class="me-2">Discount:</span><span class="text-end">—</span></li>
             </ul>
             <h3 class="fw-normal text-center my-4">${{$orderTotal=$sum+$tax+$shipping}}.<small>00</small></h3>
+            <input type="hidden" readonly name="order_total" value="{{$orderTotal}}">
+        <input type="hidden" readonly name="tax_total" value="{{$tax}}">
+        <input type="hidden" readonly name="shipping_total" value="{{$shipping}}">
             <form class="needs-validation" method="post" novalidate>
               <div class="mb-3">
-                <input class="form-control" type="text" placeholder="Promo code" required>
+                <input class="form-control" type="text" placeholder="Promo code" >
                 <div class="invalid-feedback">Please provide promo code.</div>
               </div>
               <button class="btn btn-outline-primary d-block w-100" type="submit">Apply promo code</button>
@@ -186,5 +218,6 @@
         </div>
       </div>
     </div>
+  </form>
   </div>
 @endsection

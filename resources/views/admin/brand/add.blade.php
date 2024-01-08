@@ -44,7 +44,7 @@
                             <div class="row mt-3">
                                 <label for="" class="col-md-4">Status</label>
                                 <div class="col-md-8">
-                                    <label ><input type="radio" name="status"  value="1"><span>Published</span></label>
+                                    <label ><input type="radio" name="status"  value="1" checked><span>Published</span></label>
                                     <label class="ms-3"><input type="radio" name="status"  value="0"><span>Unpublished</span></label>
                                 </div>
                             </div>

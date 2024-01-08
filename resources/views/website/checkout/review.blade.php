@@ -38,66 +38,24 @@
             <div class="step-label"><i class="ci-check-circle"></i>Review</div></a></div>
         <!-- Order details-->
         <h2 class="h6 pt-1 pb-3 mb-3 border-bottom">Review your order</h2>
+        @foreach (Cart::content() as $item)
+
         <!-- Item-->
         <div class="d-sm-flex justify-content-between my-4 pb-3 border-bottom">
-          <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html"><img src="img/shop/cart/01.jpg" width="160" alt="Product"></a>
+          <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html"><img src="{{asset($item->options->image)}}" width="160" alt="Product"></a>
             <div class="pt-2">
-              <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">Women Colorblock Sneakers</a></h3>
-              <div class="fs-sm"><span class="text-muted me-2">Size:</span>8.5</div>
-              <div class="fs-sm"><span class="text-muted me-2">Color:</span>White &amp; Blue</div>
-              <div class="fs-lg text-accent pt-2">$154.<small>00</small></div>
+              <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">{{$item->name}}</a></h3>
+              <div class="fs-sm"><span class="text-muted me-2">Size:</span>{{$item->options->size}}</div>
+              <div class="fs-sm"><span class="text-muted me-2">Color:</span>{{$item->options->color}}</div>
+              <div class="fs-lg text-accent pt-2">${{$item->price}}.<small>00</small></div>
             </div>
           </div>
           <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-end" style="max-width: 9rem;">
-            <p class="mb-0"><span class="text-muted fs-sm">Quantity:</span><span>&nbsp;1</span></p>
+            <p class="mb-0"><span class="text-muted fs-sm">Quantity:</span><span>&nbsp;{{$item->qty}}</span></p>
             <button class="btn btn-link px-0" type="button"><i class="ci-edit me-2"></i><span class="fs-sm">Edit</span></button>
           </div>
         </div>
-        <!-- Item-->
-        <div class="d-sm-flex justify-content-between my-4 pb-3 border-bottom">
-          <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html"><img src="img/shop/cart/02.jpg" width="160" alt="Product"></a>
-            <div class="pt-2">
-              <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">TH Jeans City Backpack</a></h3>
-              <div class="fs-sm"><span class="text-muted me-2">Brand:</span>Tommy Hilfiger</div>
-              <div class="fs-sm"><span class="text-muted me-2">Color:</span>Khaki</div>
-              <div class="fs-lg text-accent pt-2">$79.<small>50</small></div>
-            </div>
-          </div>
-          <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-end" style="max-width: 9rem;">
-            <p class="mb-0"><span class="text-muted fs-sm">Quantity:</span><span>&nbsp;1</span></p>
-            <button class="btn btn-link px-0" type="button"><i class="ci-edit me-2"></i><span class="fs-sm">Edit</span></button>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="d-sm-flex justify-content-between my-4 pb-3 border-bottom">
-          <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html"><img src="img/shop/cart/03.jpg" width="160" alt="Product"></a>
-            <div class="pt-2">
-              <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">3-Color Sun Stash Hat</a></h3>
-              <div class="fs-sm"><span class="text-muted me-2">Brand:</span>The North Face</div>
-              <div class="fs-sm"><span class="text-muted me-2">Color:</span>Pink / Beige / Dark blue</div>
-              <div class="fs-lg text-accent pt-2">$22.<small>50</small></div>
-            </div>
-          </div>
-          <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-end" style="max-width: 9rem;">
-            <p class="mb-0"><span class="text-muted fs-sm">Quantity:</span><span>&nbsp;1</span></p>
-            <button class="btn btn-link px-0" type="button"><i class="ci-edit me-2"></i><span class="fs-sm">Edit</span></button>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="d-sm-flex justify-content-between my-4 pb-3 border-bottom">
-          <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html"><img src="img/shop/cart/04.jpg" width="160" alt="Product"></a>
-            <div class="pt-2">
-              <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">Cotton Polo Regular Fit</a></h3>
-              <div class="fs-sm"><span class="text-muted me-2">Size:</span>42</div>
-              <div class="fs-sm"><span class="text-muted me-2">Color:</span>Light blue</div>
-              <div class="fs-lg text-accent pt-2">$9.<small>00</small></div>
-            </div>
-          </div>
-          <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-end" style="max-width: 9rem;">
-            <p class="mb-0"><span class="text-muted fs-sm">Quantity:</span><span>&nbsp;1</span></p>
-            <button class="btn btn-link px-0" type="button"><i class="ci-edit me-2"></i><span class="fs-sm">Edit</span></button>
-          </div>
-        </div>
+        @endforeach
         <!-- Client details-->
         <div class="bg-secondary rounded-3 px-4 pt-4 pb-2">
           <div class="row">
@@ -127,14 +85,26 @@
       <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
         <div class="bg-white rounded-3 shadow-lg p-4 ms-lg-auto">
           <div class="py-2 px-xl-2">
-            <h2 class="h6 text-center mb-4">Order summary</h2>
+            <div class="widget mb-3">
+              <h2 class="widget-title text-center">Order summary</h2>
+              @php($sum=0)
+              @foreach (Cart::content() as $item)
+              <div class="d-flex align-items-center pb-2 border-bottom"><a class="d-block flex-shrink-0" href="shop-single-v1.html"><img src="{{asset($item->options->image)}}" width="64" style="height: 64px" alt="Product"></a>
+                <div class="ps-2">
+                  <h6 class="widget-product-title"><a href="{{route('product-detail',$item->id)}}">{{$item->name}}</a></h6>
+                  <div class="widget-product-meta"><span class="text-accent me-2">${{$item->price}}.<small>00</small></span><span class="text-muted">x {{ $item->qty }}</span><span> = ${{ $item->subtotal}}</span></div>
+                </div>
+              </div>
+              @php($sum=$sum+$item->subtotal)
+              @endforeach
+            </div>
             <ul class="list-unstyled fs-sm pb-2 border-bottom">
-              <li class="d-flex justify-content-between align-items-center"><span class="me-2">Subtotal:</span><span class="text-end">$265.<small>00</small></span></li>
-              <li class="d-flex justify-content-between align-items-center"><span class="me-2">Shipping:</span><span class="text-end">—</span></li>
-              <li class="d-flex justify-content-between align-items-center"><span class="me-2">Taxes:</span><span class="text-end">$9.<small>50</small></span></li>
+              <li class="d-flex justify-content-between align-items-center"><span class="me-2">Subtotal:</span><span class="text-end">${{$sum}}.<small>00</small></span></li>
+              <li class="d-flex justify-content-between align-items-center"><span class="me-2">Shipping:</span><span class="text-end">${{$shipping = 100}}.<small>00</small></span></li>
+              <li class="d-flex justify-content-between align-items-center"><span class="me-2">Taxes:</span><span class="text-end">${{$tax = round($sum*0.15)}}.<small>00</small></span></li>
               <li class="d-flex justify-content-between align-items-center"><span class="me-2">Discount:</span><span class="text-end">—</span></li>
             </ul>
-            <h3 class="fw-normal text-center my-4">$274.<small>50</small></h3>
+            <h3 class="fw-normal text-center my-4">${{$orderTotal=$sum+$tax+$shipping}}.<small>00</small></h3>
             <form class="needs-validation" method="post" novalidate>
               <div class="mb-3">
                 <input class="form-control" type="text" placeholder="Promo code" required>

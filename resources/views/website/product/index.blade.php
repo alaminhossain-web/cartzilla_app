@@ -74,8 +74,8 @@
                                     </div><span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">74
                                         Reviews</span>
                                 </a>
-                                <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip"
-                                    title="Add to wishlist"><i class="ci-heart"></i></button>
+                                <a class="btn-wishlist me-0 me-lg-n3" href="{{route('add.wishlist',['id'=>$product->id])}}" type="button" data-bs-toggle="tooltip"
+                                    title="Add to wishlist"><i class="ci-heart"></i></a>
                             </div>
                             <form class="mb-grid-gutter" action="{{ route('cart.store') }}" method="post">
                               @csrf
@@ -84,9 +84,9 @@
                                 <del class="text-muted fs-lg me-3">${{$product->regular_price}}.<small>00</small></del><span
                                     class="badge bg-danger badge-shadow align-middle mt-n2">Sale</span>
                             </div>
-                            {{-- <div class="fs-sm mb-4">
+                            <div class="fs-sm mb-4">
                               <span class="text-heading fw-medium me-1">Color:</span>
-                                  </div> --}}
+                                  </div> 
                             <div class="position-relative me-n4 mb-3">
                               <div class="mt-2">
                                 @foreach ($product->colors as $key => $color)
