@@ -83,7 +83,7 @@ class CartController extends Controller
     public function delete(string $rowId)
     {
         Cart::remove($rowId);
-        return back()->with('error','Cart product remove successfully.');
+        return redirect('/cart')->with('error','Cart product remove successfully.');
     }
     public function updateProduct(Request $request)
     {

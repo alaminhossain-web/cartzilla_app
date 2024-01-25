@@ -14,7 +14,9 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Customer\CustomerAuthController;
 use App\Http\Controllers\Wishlist\WishlistController;
+use App\Http\Controllers\SslCommerz\SslCommerzPaymentController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -46,11 +48,23 @@ Route::get('/login-register', [CustomerAuthController::class, 'login'])->name('l
 Route::post('/login-check', [CustomerAuthController::class, 'loginCheck'])->name('login-check');
 Route::post('/new-customer', [CustomerAuthController::class, 'newCustomer'])->name('new-customer');
 Route::get('/customer-logout', [CustomerAuthController::class, 'logout'])->name('customer-logout');
-Route::get('/my-dashboard', [CustomerAuthController::class, 'dashboard'])->name('customer.dashboard');
+Route::get('/my-dashboard', [CustomerAuthController::class, 'dashboard'])->name('customer.dashboard')->middleware('customer');
 Route::resource('wishlist',WishlistController::class);
 Route::get('/add-wishlist/{id}',[WishlistController::class,'add'])->name('add.wishlist');
 
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
 
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 
 
 
